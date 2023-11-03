@@ -1,0 +1,30 @@
+#ifndef MYEVENTS_H_
+#define MYEVENTS_H_
+
+#include "pico/stdlib.h"
+
+typedef union {
+	uint8_t reg;
+	struct {
+		uint8_t flag0 : 1;
+		uint8_t flag1 : 1;
+		uint8_t flag2 : 1;
+		uint8_t flag3 : 1;
+		uint8_t flag4 : 1;
+		uint8_t flag5 : 1;
+		uint8_t flag6 : 1;
+		uint8_t flag7 : 1;
+	}flags;
+}_events_str;
+
+extern volatile _events_str _events;
+
+#define PENDING_EVENTS	_events.reg
+#define EV_TIMER		_events.flags.flag0
+#define EV_GPIO			_events.flags.flag1
+
+#define DEBOUNCECOUNT	5;			// Timer generates INTs each 10ms (5x10ms = 50ms for debouncing)
+
+void eventsController(void);
+
+#endif
